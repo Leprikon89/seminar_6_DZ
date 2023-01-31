@@ -1,47 +1,34 @@
-﻿// Задача 43. Напишите программу, которая найдёт точку пересечения двух прямых, заданных уравнениями y = k1 * x + b1, y = k2 * x + b2; значения b1, k1, b2 и k2 задаются пользователем.
-// b1 = 2, k1 = 5, b2 = 4, k2 = 9 -> (-0,5; 5,5)
+﻿
+//Задача 43. Напишите программу, которая найдёт точку
+//пересечения двух прямых, заданных уравнениями:
+//y = k1 * x + b1, y = k2 * x + b2; 
+//значения b1, k1, b2 и k2 задаются пользователем.
+//b1 = 2, k1 = 5, b2 = 4, k2 = 9 -> (-0,5; -0,5) */
 
+double [] array = new double[4];
+double x = 0;
+double y = 0;
 
-
-double[,] coeff = new double[2, 2];
-double[] crossPoint = new double[2];
-
-void InputCoefficients(){
-  for (int i = 0; i < coeff.GetLength(0); i++)
-  {
-    Console.Write($"Введите коэффициенты {i+1}-го уравнения (y = k * x + b):\n");
-    for (int j = 0; j < coeff.GetLength(1); j++)
+/// Метод заполнения значений данными пользователя:
+void AssignmentValue(double [] array)
+{
+    for (int i = 0; i < array.Length; i++)
     {
-      if(j==0) Console.Write($"Введите коэффициент k: ");
-      else Console.Write($"Введите коэффициент b: ");
-      coeff[i,j] = Convert.ToInt32(Console.ReadLine());
+            Console.Write($"Введите значение: ");
+            array[i] = Convert.ToDouble(Console.ReadLine());
     }
-  }
 }
 
-double[] Decision(double[,] coeff)
+/// Метод нахождения пересечения двух прямых:
+void SearchCollision(double [] array)
 {
-  crossPoint[0] = (coeff[1,1] - coeff[0,1]) / (coeff[0,0] - coeff[1,0]);
-  crossPoint[1] = crossPoint[0] * coeff[0,0] + coeff[0,1];
-  return crossPoint;
+    x = (array[2] - array[0]) / (array[1] - array[3]);
+    y = array[1] * x + array[0];
 }
 
-void OutputResponse(double[,] coeff)
-{
-  if (coeff[0,0] == coeff[1,0] && coeff[0,1] == coeff[1,1]) 
-  {
-    Console.Write($"\nПрямые совпадают");
-  }
-  else if (coeff[0,0] == coeff[1,0] && coeff[0,1] != coeff[1,1]) 
-  {
-    Console.Write($"\nПрямые параллельны");
-  }
-  else 
-  {
-    Decision(coeff);
-    Console.Write($"\nТочка пересечения прямых: ({crossPoint[0]}, {crossPoint[1]})");
-  }
-}
+Console.WriteLine("Введите значения x1, y1, x2, y2:");
 
-InputCoefficients();
-OutputResponse(coeff);
+AssignmentValue(array);
+SearchCollision(array);
+
+Console.WriteLine($"Две прямые пересекаются в точке: ({x}; {y})");
